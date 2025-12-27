@@ -26,7 +26,7 @@ class LeadController extends Controller
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
-            'observacoes' => 'required'
+            'observacoes' => 'nullable'
         ]);
 
         if ($validator->fails()) {
@@ -54,7 +54,7 @@ class LeadController extends Controller
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
-            'observacoes' => 'required'
+            'observacoes' => 'nullable'
         ]);
 
         if ($validator->fails()) {

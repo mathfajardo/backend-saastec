@@ -26,3 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
 // rota para autenticação
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/leads', [LeadController::class, 'index']);
+Route::get('/leads/{lead}', [LeadController::class, 'show']);
+Route::post('/leads', [LeadController::class, 'store']);
+Route::put('/leads/{lead}', [LeadController::class, 'update']);
+Route::delete('/leads/{lead}', [LeadController::class, 'destroy']);
+
