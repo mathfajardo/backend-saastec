@@ -18,6 +18,7 @@ class LeadResource extends JsonResource
             "id" => $this->id,
             "cliente_id" => $this->cliente_id,
             "nome" => $this->nome,
+            "numero" => $this->numero,
             "status" => $this->status,
             "observacoes" => $this->observacoes
         ];
