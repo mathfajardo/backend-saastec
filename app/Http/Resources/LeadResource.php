@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +21,9 @@ class LeadResource extends JsonResource
             "nome" => $this->nome,
             "numero" => $this->numero,
             "status" => $this->status,
-            "observacoes" => $this->observacoes
+            "observacoes" => $this->observacoes,
+            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
+            "updated_at" => Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')
         ];
     }
 }
