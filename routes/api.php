@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -17,6 +18,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/leads', [LeadController::class, 'store']);
     Route::put('/leads/{lead}', [LeadController::class, 'update']);
     Route::delete('/leads/{lead}', [LeadController::class, 'destroy']);
+
+    //clientes
+    Route::get('/clientes', [ClienteController::class, 'index']);
+    Route::get('/clientes/{cliente}', [ClienteController::class, 'show']);
+    Route::post('/clientes', [ClienteController::class, 'store']);
+
 
     // user
     Route::post('/user', [UserController::class, 'store']);
