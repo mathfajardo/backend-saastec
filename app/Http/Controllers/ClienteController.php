@@ -24,6 +24,7 @@ class ClienteController extends Controller
             'nome' => 'required',
             'numero' => 'required',
             'plano' => 'required',
+            'mensalidade' => 'required',
             'observacoes' => 'nullable'
         ]);
 

@@ -9,6 +9,7 @@ class ClientesFilter extends Filter {
         'nome' => ['eq'],
         'numero' => ['eq'],
         'plano' => ['eq'],
+        'mensalidade' => ['eq'],
         'observacoes' => ['eq']
     ];
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('numero');
             $table->string('plano');
+            $table->decimal('mensalidade', 5, 2);
             $table->string('observacoes')->nullable();
             $table->timestamps();
         });

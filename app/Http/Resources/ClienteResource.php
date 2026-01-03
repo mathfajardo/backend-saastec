@@ -20,6 +20,7 @@ class ClienteResource extends JsonResource
             "nome" => $this->nome,
             "numero" => $this->numero,
             "plano" => $this->plano,
+            "mensalidade" => $this->mensalidade,
             "observacoes" => $this->observacoes,
             "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
             "updated_at" => Carbon::parse($this->updated_at)->format('d/m H:i')//Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')

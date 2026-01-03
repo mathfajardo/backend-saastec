@@ -18,6 +18,7 @@ class Cliente extends Model
         'nome',
         'numero',
         'plano',
+        'mensalidade',
         'observacoes'
     ];
 
