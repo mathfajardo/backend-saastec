@@ -87,4 +87,15 @@ class LeadController extends Controller
 
         return $this->response("Não foi possível deletar", 400);
     }
+
+    public function leadsMes() {
+
+        // pegando o mes atual
+        $mes = now()->month;
+
+        // query
+        $total = Lead::whereMonth('created_at', $mes)->count();
+
+        return $this->response("Query leads no mes realizada com sucesso", 200, ['total' => $total]);
+    }
 }

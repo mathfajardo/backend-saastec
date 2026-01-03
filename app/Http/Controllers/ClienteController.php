@@ -45,4 +45,30 @@ class ClienteController extends Controller
     {
         return new ClienteResource(Cliente::where('id', $id)->first());
     }
+
+
+
+
+
+
+
+    public function clientesMes() {
+
+        // pegando o mes atual
+        $mes = now()->month;
+
+        // query
+        $total = Cliente::whereMonth('created_at', $mes)->count();
+
+        return $this->response("Query clientes no mes realizada com sucesso", 200, ['total' => $total]);
+    }
+
+
+    public function clientesTotal() {
+
+        // query
+        $total = Cliente::count();
+
+        return $this->response("Query clientes no total realizada com sucesso", 200, ['total' => $total]);
+    }
 }

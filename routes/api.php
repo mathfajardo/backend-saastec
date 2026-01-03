@@ -18,11 +18,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/leads', [LeadController::class, 'store']);
     Route::put('/leads/{lead}', [LeadController::class, 'update']);
     Route::delete('/leads/{lead}', [LeadController::class, 'destroy']);
+    Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
 
     //clientes
     Route::get('/clientes', [ClienteController::class, 'index']);
     Route::get('/clientes/{cliente}', [ClienteController::class, 'show']);
     Route::post('/clientes', [ClienteController::class, 'store']);
+    Route::get('/clientesMes', [ClienteController::class, 'clientesMes']);
+    Route::get('/clientesTotal', [ClienteController::class, 'clientesTotal']);
 
 
     // user
@@ -40,3 +43,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/user', [UserController::class, 'store']);
 
+Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
+Route::get('/clientesMes', [ClienteController::class, 'clientesMes']);
+Route::get('/clientesTotal', [ClienteController::class, 'clientesTotal']);
