@@ -46,6 +46,37 @@ class ClienteController extends Controller
         return new ClienteResource(Cliente::where('id', $id)->first());
     }
 
+    public function update(Request $request, string $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required',
+            'numero' => 'required',
+            'plano' => 'required',
+            'mensalidade' => 'required',
+            'observacoes' => 'nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error("Erro na validação", 422, $validator->errors());
+        }
+
+        $validated = $validator->validate();
+
+        $atualiza = Cliente::find($id)->update([
+            'nome' => $validated['nome'],
+            'numero' => $validated['numero'],
+            'plano' => $validated['plano'],
+            'mensalidade' => $validated['mensalidade'],
+            'observacoes' => $validated['observacoes']
+        ]);
+
+        if ($atualiza) {
+            return $this->response("Cliente atualizado com sucesso", 200, $request->all());
+        }
+
+        return $this->error("Não foi possível atualizar", 400);
+    }
+
 
 
 
