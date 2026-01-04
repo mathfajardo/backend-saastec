@@ -77,9 +77,16 @@ class ClienteController extends Controller
         return $this->error("Não foi possível atualizar", 400);
     }
 
+    public function destroy(Cliente $cliente)
+    {
+        $deleta = $cliente->delete();
 
+        if ($deleta) {
+            return $this->response("Deletado com sucesso", 200);
+        }
 
-
+        return $this->response("Não foi possível deletar", 400);
+    }
 
 
 
