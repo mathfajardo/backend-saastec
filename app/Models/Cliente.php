@@ -32,7 +32,7 @@ class Cliente extends Model
         $queryFilter = (new ClientesFilter)->filter($request);
 
         if (empty($queryFilter)) {
-            return ClienteResource::collection(Cliente::all());
+            return ClienteResource::collection(Cliente::orderBy('nome', 'ASC')->all());
         }
 
         $data = Cliente::query();
