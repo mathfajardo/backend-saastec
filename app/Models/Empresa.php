@@ -10,6 +10,12 @@ class Empresa extends Model
     /** @use HasFactory<\Database\Factories\EmpresaFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'nome',
+        'plano',
+        'status'
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class);

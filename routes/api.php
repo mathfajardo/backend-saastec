@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -12,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    // empresas
+    Route::post('/empresas', [EmpresaController::class, 'store']);
+
+
     // leads
     Route::get('/leads', [LeadController::class, 'index']);
     Route::get('/leads/{lead}', [LeadController::class, 'show']);
@@ -44,6 +50,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::post('/user', [UserController::class, 'store']);
+
+
+Route::post('/empresas', [EmpresaController::class, 'store']);
 
 Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
 Route::get('/clientesMes', [ClienteController::class, 'clientesMes']);

@@ -21,19 +21,27 @@ class LeadController extends Controller
     public function store(Request $request)
     {
 
+        
+
         $validator = Validator::make($request->all(), [
-            'cliente_id' => 'nullable',
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
             'observacoes' => 'nullable'
         ]);
 
+        
+
         if ($validator->fails()) {
             return $this->error('Erro na validação', 422, $validator->errors());
         }
 
-        $criado = Lead::create($validator->validated());
+        // buscando a empresa id
+        $empresaId = auth()->user()->empresa_id;
+
+        $data = $validator->validate();
+        $data['empresa_id'] = $empresaId;
+        $criado = Lead::create($data);
 
         if ($criado) {
             return $this->response("Lead adicionado com sucesso", 200, $criado);

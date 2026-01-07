@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('plano');
-            $table->boolean('status');
+            $table->string('status');
             $table->timestamps();
         });
     }

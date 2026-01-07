@@ -26,7 +26,7 @@ class Lead extends Model
     }
 
     protected $fillable = [
-        'cliente_id',
+        'empresa_id',
         'nome',
         'numero',
         'status',
