@@ -21,8 +21,6 @@ class LeadController extends Controller
     public function store(Request $request)
     {
 
-        
-
         $validator = Validator::make($request->all(), [
             'nome' => 'required',
             'numero' => 'required',
@@ -58,7 +56,6 @@ class LeadController extends Controller
     public function update(Request $request, string $id) 
     {
         $validator = Validator::make($request->all(), [
-            'cliente_id' => 'nullable',
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
@@ -72,7 +69,6 @@ class LeadController extends Controller
         $validated = $validator->validated();
 
         $atualiza = Lead::find($id)->update([
-            'cliente_id' => $validated['cliente_id'] ?? null,
             'nome' => $validated['nome'],
             'numero' => $validated['numero'],
             'status' => $validated['status'],
