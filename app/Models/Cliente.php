@@ -23,7 +23,12 @@ class Cliente extends Model
     ];
 
 
-    public function lead(): BelongsTo
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function lead()
     {
         return $this->belongsTo(Lead::class);
     }

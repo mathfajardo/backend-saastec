@@ -14,6 +14,17 @@ class Lead extends Model
     /** @use HasFactory<\Database\Factories\LeadFactory> */
     use HasFactory;
 
+    //relacionametno
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
     protected $fillable = [
         'cliente_id',
         'nome',
@@ -21,11 +32,6 @@ class Lead extends Model
         'status',
         'observacoes'
     ];
-
-    public function cliente(): HasOne
-    {
-        return $this->hasOne(Cliente::class);
-    }
 
     public function filter(Request $request) {
         $queryFilter = (new LeadsFilter)->filter($request);
