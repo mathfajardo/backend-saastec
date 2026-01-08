@@ -11,6 +11,10 @@ class UserController extends Controller
 {
     use HttpResponses;
 
+    public function index(Request $request)
+    {
+        return (new User())->filter($request);
+    }
 
     public function store(Request $request) 
     {
