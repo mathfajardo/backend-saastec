@@ -15,6 +15,8 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = [
+        'empresa_id',
+        'lead_id',
         'nome',
         'numero',
         'plano',
@@ -36,11 +38,13 @@ class Cliente extends Model
     public function filter(Request $request) {
         $queryFilter = (new ClientesFilter)->filter($request);
 
+        $empresa_id = auth()->user()->empresa_id;
+
         if (empty($queryFilter)) {
-            return ClienteResource::collection(Cliente::orderBy('nome', 'ASC')->get());
+            return ClienteResource::collection(Cliente::where('empresa_id', $empresa_id)->orderBy('nome', 'ASC')->get());
         }
 
-        $data = Cliente::query();
+        $data = Cliente::where('empresa_id', $empresa_id);
 
         if (!empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {

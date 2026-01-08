@@ -53,7 +53,3 @@ Route::post('/user', [UserController::class, 'store']);
 
 
 Route::post('/empresas', [EmpresaController::class, 'store']);
-
-Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
-Route::get('/clientesMes', [ClienteController::class, 'clientesMes']);
-Route::get('/clientesTotal', [ClienteController::class, 'clientesTotal']);

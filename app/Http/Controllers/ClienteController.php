@@ -21,6 +21,7 @@ class ClienteController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
+            'lead_id' => 'nullable',
             'nome' => 'required',
             'numero' => 'required',
             'plano' => 'required',
@@ -32,7 +33,13 @@ class ClienteController extends Controller
             return $this->error("Erro na validação", 422, $validator->errors());
         }
 
-        $criado = Cliente::create($validator->validate());
+        
+        // buscando a empresa id
+        $empresa_id = auth()->user()->empresa_id;
+
+        $data = $validator->validate();
+        $data['empresa_id'] = $empresa_id;
+        $criado = Cliente::create($data);
 
         if ($criado) {
             return $this->response("Cliente adicionado com sucesso", 200, $criado);
@@ -42,8 +49,10 @@ class ClienteController extends Controller
     }
 
     public function show(string $id) 
-    {
-        return new ClienteResource(Cliente::where('id', $id)->first());
+    {   
+        // buscando a empresa id
+        $empresa_id = auth()->user()->empresa_id;
+        return new ClienteResource(Cliente::where('id', $id)->where('empresa_id', $empresa_id)->first());
     }
 
     public function update(Request $request, string $id)
@@ -92,11 +101,14 @@ class ClienteController extends Controller
 
     public function clientesMes() {
 
+        // buscando a empresa id
+        $empresa_id = auth()->user()->empresa_id;
+
         // pegando o mes atual
         $mes = now()->month;
 
         // query
-        $total = Cliente::whereMonth('created_at', $mes)->count();
+        $total = Cliente::whereMonth('created_at', $mes)->where('empresa_id', $empresa_id)->count();
 
         return $this->response("Query clientes no mes realizada com sucesso", 200, ['total' => $total]);
     }
@@ -104,8 +116,11 @@ class ClienteController extends Controller
 
     public function clientesTotal() {
 
+        // buscando a empresa id
+        $empresa_id = auth()->user()->empresa_id;
+
         // query
-        $total = Cliente::count();
+        $total = Cliente::where('empresa_id', $empresa_id)->count();
 
         return $this->response("Query clientes no total realizada com sucesso", 200, ['total' => $total]);
     }

@@ -35,10 +35,10 @@ class LeadController extends Controller
         }
 
         // buscando a empresa id
-        $empresaId = auth()->user()->empresa_id;
+        $empresa_id = auth()->user()->empresa_id;
 
         $data = $validator->validate();
-        $data['empresa_id'] = $empresaId;
+        $data['empresa_id'] = $empresa_id;
         $criado = Lead::create($data);
 
         if ($criado) {
@@ -49,8 +49,9 @@ class LeadController extends Controller
     }
 
     public function show(string $id) 
-    {
-        return new LeadResource(Lead::where('id', $id)->first());
+    {   
+        $empresa_id = auth()->user()->empresa_id;
+        return new LeadResource(Lead::where('id', $id)->where('empresa_id', $empresa_id)->first());
     }
 
     public function update(Request $request, string $id) 
@@ -94,11 +95,13 @@ class LeadController extends Controller
 
     public function leadsMes() {
 
+        $empresa_id = auth()->user()->empresa_id;
+
         // pegando o mes atual
         $mes = now()->month;
 
         // query
-        $total = Lead::whereMonth('created_at', $mes)->count();
+        $total = Lead::whereMonth('created_at', $mes)->where('empresa_id', $empresa_id)->count();
 
         return $this->response("Query leads no mes realizada com sucesso", 200, ['total' => $total]);
     }

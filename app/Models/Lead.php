@@ -36,11 +36,13 @@ class Lead extends Model
     public function filter(Request $request) {
         $queryFilter = (new LeadsFilter)->filter($request);
 
+        $empresa_id = auth()->user()->empresa_id;
+
         if (empty($queryFilter)) {
-            return LeadResource::collection(Lead::all());
+            return LeadResource::collection(Lead::where('empresa_id', $empresa_id)->get());
         }
 
-        $data = Lead::query();
+        $data = Lead::where('empresa_id', $empresa_id);
 
         if (!empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
