@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/leads/{lead}', [LeadController::class, 'update']);
     Route::delete('/leads/{lead}', [LeadController::class, 'destroy']);
     Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
+    Route::get('/leadsMesTodos', [LeadController::class, 'leadsMesTodos']);
 
     //clientes
     Route::get('/clientes', [ClienteController::class, 'index']);

@@ -99,10 +99,30 @@ class LeadController extends Controller
 
         // pegando o mes atual
         $mes = now()->month;
+        $ano = now()->year;
 
         // query
-        $total = Lead::whereMonth('created_at', $mes)->where('empresa_id', $empresa_id)->count();
+        $total = Lead::whereMonth('created_at', $mes)->whereYear('created_at', $ano)->where('empresa_id', $empresa_id)->count();
 
         return $this->response("Query leads no mes realizada com sucesso", 200, ['total' => $total]);
+    }
+
+    public function leadsMesTodos() {
+
+        $empresa_id = auth()->user()->empresa_id;
+
+        
+        
+        $ano = now()->year;
+
+        $meses = [];
+
+        for ($i = 1; $i < 13; $i++) {
+            $total = Lead::whereMonth('created_at', $i)->whereYear('created_at', $ano)->where('empresa_id', $empresa_id)->count();
+
+            $meses[$i] = $total;
+        }
+
+        return $this->response("Query leads no mes realizada com sucesso", 200, [$meses]);
     }
 }
