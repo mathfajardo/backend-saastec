@@ -39,7 +39,7 @@ class Lead extends Model
         $empresa_id = auth()->user()->empresa_id;
 
         if (empty($queryFilter)) {
-            return LeadResource::collection(Lead::where('empresa_id', $empresa_id)->get());
+            return LeadResource::collection(Lead::where('empresa_id', $empresa_id)->orderBy('updated_at', 'DESC')->get());
         }
 
         $data = Lead::where('empresa_id', $empresa_id);
