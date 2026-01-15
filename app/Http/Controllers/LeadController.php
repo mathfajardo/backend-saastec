@@ -146,7 +146,7 @@ class LeadController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json'
-        ])->post('https://n8n.fajatech.com.br/webhook-test/4c3f68ed-56b6-49fa-a5af-6da47957a72b', $dados_enviar);
+        ])->post('https://n8n.fajatech.com.br/webhook/4c3f68ed-56b6-49fa-a5af-6da47957a72b', $dados_enviar);
 
         return $this->response("Deu certo", 200);
 
