@@ -128,13 +128,17 @@ class LeadController extends Controller
     }
 
     public function disparoCampanhaLeads(Request $request)
-    {
+    {   
+        // array para armazenar dados
         $dados_enviar = [];
 
+        // variavel para armazenar a mensagem
         $mensagem = $request->input('mensagem');
 
+        // variavel para armazenar os leads
         $leads = $request->input('leads');
 
+        // loop para percorrer todos os leads
         foreach($leads as $lead) {
             $dados_enviar[] = [
                 'mensagem' => $mensagem,
@@ -143,11 +147,12 @@ class LeadController extends Controller
             ];
         }
 
+        // envio para o n8n
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json'
         ])->post('https://n8n.fajatech.com.br/webhook/4c3f68ed-56b6-49fa-a5af-6da47957a72b', $dados_enviar);
-
+        
         return $this->response("Deu certo", 200);
 
     }
