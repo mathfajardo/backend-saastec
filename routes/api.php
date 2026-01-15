@@ -55,3 +55,5 @@ Route::post('/user', [UserController::class, 'store']);
 
 
 Route::post('/empresas', [EmpresaController::class, 'store']);
+
+Route::post('/disparocampanha', [LeadController::class, 'disparoCampanhaLeads']);

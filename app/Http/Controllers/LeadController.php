@@ -6,6 +6,7 @@ use App\Http\Resources\LeadResource;
 use App\Models\Lead;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
@@ -124,5 +125,30 @@ class LeadController extends Controller
         }
 
         return $this->response("Query leads no mes realizada com sucesso", 200, [$meses]);
+    }
+
+    public function disparoCampanhaLeads(Request $request)
+    {
+        $dados_enviar = [];
+
+        $mensagem = $request->input('mensagem');
+
+        $leads = $request->input('leads');
+
+        foreach($leads as $lead) {
+            $dados_enviar[] = [
+                'mensagem' => $mensagem,
+                'nome' => $lead['nome'],
+                'numero' => $lead['numero']
+            ];
+        }
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ])->post('https://n8n.fajatech.com.br/webhook-test/4c3f68ed-56b6-49fa-a5af-6da47957a72b', $dados_enviar);
+
+        return $this->response("Deu certo", 200);
+
     }
 }
