@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\PromptController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // user
     Route::get('/user', [UserController::class, 'index']);
     Route::post('/user', [UserController::class, 'store']);
+
+    // prompt
+    Route::get('/prompt', [PromptController::class, 'index']);
+    Route::get('/prompt/{prompt}', [PromptController::class, 'show']);
+    Route::post('/prompt', [PromptController::class, 'store']);
+    Route::put('/prompt/{prompt}', [PromptController::class, 'update']);
 
 
     // verifica token

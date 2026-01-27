@@ -30,4 +30,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Cliente::class);
     }
+
+    public function prompt()
+    {
+        return $this->hasMany(Prompt::class);
+    }
 }
