@@ -14,10 +14,10 @@ class ClienteController extends Controller
 
     public function index(Request $request)
     {
-        return (new Cliente())->filter($request);
+        return (new Cliente)->filter($request);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -26,14 +26,13 @@ class ClienteController extends Controller
             'numero' => 'required',
             'plano' => 'required',
             'mensalidade' => 'required',
-            'observacoes' => 'nullable'
+            'observacoes' => 'nullable',
         ]);
 
         if ($validator->fails()) {
-            return $this->error("Erro na validação", 422, $validator->errors());
+            return $this->error('Erro na validação', 422, $validator->errors());
         }
 
-        
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
 
@@ -42,16 +41,17 @@ class ClienteController extends Controller
         $criado = Cliente::create($data);
 
         if ($criado) {
-            return $this->response("Cliente adicionado com sucesso", 200, $criado);
+            return $this->response('Cliente adicionado com sucesso', 200, $criado);
         }
 
-        return $this->error("Não foi possível adicionar", 400);
+        return $this->error('Não foi possível adicionar', 400);
     }
 
-    public function show(string $id) 
-    {   
+    public function show(string $id)
+    {
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
+
         return new ClienteResource(Cliente::where('id', $id)->where('empresa_id', $empresa_id)->first());
     }
 
@@ -62,11 +62,11 @@ class ClienteController extends Controller
             'numero' => 'required',
             'plano' => 'required',
             'mensalidade' => 'required',
-            'observacoes' => 'nullable'
+            'observacoes' => 'nullable',
         ]);
 
         if ($validator->fails()) {
-            return $this->error("Erro na validação", 422, $validator->errors());
+            return $this->error('Erro na validação', 422, $validator->errors());
         }
 
         $validated = $validator->validate();
@@ -76,14 +76,14 @@ class ClienteController extends Controller
             'numero' => $validated['numero'],
             'plano' => $validated['plano'],
             'mensalidade' => $validated['mensalidade'],
-            'observacoes' => $validated['observacoes']
+            'observacoes' => $validated['observacoes'],
         ]);
 
         if ($atualiza) {
-            return $this->response("Cliente atualizado com sucesso", 200, $request->all());
+            return $this->response('Cliente atualizado com sucesso', 200, $request->all());
         }
 
-        return $this->error("Não foi possível atualizar", 400);
+        return $this->error('Não foi possível atualizar', 400);
     }
 
     public function destroy(Cliente $cliente)
@@ -91,15 +91,14 @@ class ClienteController extends Controller
         $deleta = $cliente->delete();
 
         if ($deleta) {
-            return $this->response("Deletado com sucesso", 200);
+            return $this->response('Deletado com sucesso', 200);
         }
 
-        return $this->response("Não foi possível deletar", 400);
+        return $this->response('Não foi possível deletar', 400);
     }
 
-
-
-    public function clientesMes() {
+    public function clientesMes()
+    {
 
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
@@ -110,11 +109,11 @@ class ClienteController extends Controller
         // query
         $total = Cliente::whereMonth('created_at', $mes)->where('empresa_id', $empresa_id)->count();
 
-        return $this->response("Query clientes no mes realizada com sucesso", 200, ['total' => $total]);
+        return $this->response('Query clientes no mes realizada com sucesso', 200, ['total' => $total]);
     }
 
-
-    public function clientesTotal() {
+    public function clientesTotal()
+    {
 
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
@@ -122,6 +121,6 @@ class ClienteController extends Controller
         // query
         $total = Cliente::where('empresa_id', $empresa_id)->count();
 
-        return $this->response("Query clientes no total realizada com sucesso", 200, ['total' => $total]);
+        return $this->response('Query clientes no total realizada com sucesso', 200, ['total' => $total]);
     }
 }

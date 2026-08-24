@@ -19,7 +19,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/empresas', [EmpresaController::class, 'store']);
     Route::get('/empresas', [EmpresaController::class, 'index']);
 
-
     // leads
     Route::get('/leads', [LeadController::class, 'index']);
     Route::get('/leads/{lead}', [LeadController::class, 'show']);
@@ -29,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/leadsMes', [LeadController::class, 'leadsMes']);
     Route::get('/leadsMesTodos', [LeadController::class, 'leadsMesTodos']);
 
-    //clientes
+    // clientes
     Route::get('/clientes', [ClienteController::class, 'index']);
     Route::get('/clientes/{cliente}', [ClienteController::class, 'show']);
     Route::post('/clientes', [ClienteController::class, 'store']);
@@ -37,7 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy']);
     Route::get('/clientesMes', [ClienteController::class, 'clientesMes']);
     Route::get('/clientesTotal', [ClienteController::class, 'clientesTotal']);
-
 
     // user
     Route::get('/user', [UserController::class, 'index']);
@@ -51,7 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // logout
     Route::post('/logout', [AuthController::class, 'logout']);
-
 
     // verifica token
     Route::get('login/verifica', [AuthController::class, 'verifica_token']);

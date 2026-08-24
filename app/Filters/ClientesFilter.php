@@ -2,7 +2,8 @@
 
 namespace App\Filters;
 
-class ClientesFilter extends Filter {
+class ClientesFilter extends Filter
+{
     protected array $allowedOperatorsFields = [
         'id' => ['eq'],
         'cliente_id' => ['eq'],
@@ -10,6 +11,6 @@ class ClientesFilter extends Filter {
         'numero' => ['eq'],
         'plano' => ['eq'],
         'mensalidade' => ['eq'],
-        'observacoes' => ['eq']
+        'observacoes' => ['eq'],
     ];
 }

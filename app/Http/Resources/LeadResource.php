@@ -16,14 +16,14 @@ class LeadResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "cliente_id" => $this->cliente_id,
-            "nome" => $this->nome,
-            "numero" => $this->numero,
-            "status" => $this->status,
-            "observacoes" => $this->observacoes,
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
-            "updated_at" => Carbon::parse($this->updated_at)->format('d/m H:i')//Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')
+            'id' => $this->id,
+            'cliente_id' => $this->cliente_id,
+            'nome' => $this->nome,
+            'numero' => $this->numero,
+            'status' => $this->status,
+            'observacoes' => $this->observacoes,
+            'created_at' => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('d/m H:i'), // Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')
         ];
     }
 }

@@ -13,16 +13,16 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        return (new User())->filter($request);
+        return (new User)->filter($request);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'empresa_id' => 'required',
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -34,6 +34,7 @@ class UserController extends Controller
         if ($created) {
             return $this->response('Usuario adicionado com sucesso', 200, $created);
         }
+
         return $this->response('Usuario não adicionado', 400);
     }
 }

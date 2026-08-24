@@ -6,7 +6,6 @@ use App\Filters\LeadsFilter;
 use App\Http\Resources\LeadResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
 class Lead extends Model
@@ -14,7 +13,7 @@ class Lead extends Model
     /** @use HasFactory<\Database\Factories\LeadFactory> */
     use HasFactory;
 
-    //relacionametno
+    // relacionametno
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
@@ -30,10 +29,11 @@ class Lead extends Model
         'nome',
         'numero',
         'status',
-        'observacoes'
+        'observacoes',
     ];
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $queryFilter = (new LeadsFilter)->filter($request);
 
         $empresa_id = auth()->user()->empresa_id;
@@ -44,7 +44,7 @@ class Lead extends Model
 
         $data = Lead::where('empresa_id', $empresa_id);
 
-        if (!empty($queryFilter['whereIn'])) {
+        if (! empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
                 $data->whereIn($value[0], $value[1]);
             }

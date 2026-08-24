@@ -12,11 +12,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if(Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             return $this->response('Autorizado', 200, [
-                'token' => $request->user()->createToken('user', /*['get-produtos']*/)->plainTextToken
+                'token' => $request->user()->createToken('user'/* ['get-produtos'] */)->plainTextToken,
             ]);
         }
+
         return $this->response('Não autorizado', 403);
     }
 
@@ -24,12 +25,13 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->response("token removido", 200);
+        return $this->response('token removido', 200);
     }
 
-    public function verifica_token(Request $request) {
+    public function verifica_token(Request $request)
+    {
         return $this->response('Token válido', 200, [
-            'user' => $request->user()
+            'user' => $request->user(),
         ]);
     }
 }

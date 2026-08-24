@@ -15,7 +15,7 @@ class Prompt extends Model
 
     protected $fillable = [
         'empresa_id',
-        'mensagem'
+        'mensagem',
     ];
 
     public function empresa()
@@ -23,7 +23,8 @@ class Prompt extends Model
         return $this->belongsTo(Empresa::class);
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $queryFilter = (new PromptFilter)->filter($request);
 
         $empresa_id = auth()->user()->empresa_id;
@@ -34,7 +35,7 @@ class Prompt extends Model
 
         $data = Prompt::where('empresa_id', $empresa_id);
 
-        if (!empty($queryFilter['whereIn'])) {
+        if (! empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
                 $data->whereIn($value[0], $value[1]);
             }

@@ -5,8 +5,8 @@ namespace App\Filters;
 use Exception;
 use Illuminate\Http\Request;
 
-abstract class Filter {
-
+abstract class Filter
+{
     protected array $allowedOperatorsFields;
 
     protected array $translateOperatorsFields = [
@@ -18,7 +18,8 @@ abstract class Filter {
         'ne' => '!=',
     ];
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
 
         $where = [];
         $whereIn = [];
@@ -27,22 +28,21 @@ abstract class Filter {
             $queryOperator = $request->query($param);
             if ($queryOperator) {
                 foreach ($queryOperator as $operator => $value) {
-                    if (!in_array($operator, $operators)) {
+                    if (! in_array($operator, $operators)) {
                         throw new Exception("{$param} não tem um {$operator} operador");
                     }
-                    
+
                     if (str_contains($value, '[')) {
                         $whereIn[] = [
                             $param,
-                            explode(',', str_replace(['[', ']'], ['',''], $value)),
-                            $value
+                            explode(',', str_replace(['[', ']'], ['', ''], $value)),
+                            $value,
                         ];
-                    }
-                    else {
+                    } else {
                         $where[] = [
                             $param,
                             $this->translateOperatorsFields[$operator],
-                            $value
+                            $value,
                         ];
                     }
                 }
@@ -55,7 +55,7 @@ abstract class Filter {
 
         return [
             'where' => $where,
-            'whereIn' => $whereIn
+            'whereIn' => $whereIn,
         ];
     }
 }

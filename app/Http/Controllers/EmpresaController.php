@@ -13,33 +13,31 @@ class EmpresaController extends Controller
 
     public function index(Request $request)
     {
-        return (new Empresa())->filter($request);
+        return (new Empresa)->filter($request);
     }
-
 
     public function store(Request $request)
     {
-    
+
         // validator para validar se foi enviado tudo que precisa
         $validator = Validator::make($request->all(), [
             'nome' => 'required',
             'plano' => 'required',
             'status' => 'required',
-            'instancia' => 'required'
+            'instancia' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return $this->error("Erro na validação", 422, $validator->errors());
+            return $this->error('Erro na validação', 422, $validator->errors());
         }
 
         $criado = Empresa::create($validator->validate());
 
         if ($criado) {
-            return $this->response("Empresa adicionada com sucesso", 200, $criado);
+            return $this->response('Empresa adicionada com sucesso', 200, $criado);
         }
 
-        return $this->error("Não foi possível adicionar", 400);
-
+        return $this->error('Não foi possível adicionar', 400);
 
     }
 }

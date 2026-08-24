@@ -15,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,13 +52,14 @@ class User extends Authenticatable
         ];
     }
 
-    //relacionametno
+    // relacionametno
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $queryFilter = (new UsersFilter)->filter($request);
 
         $empresa_id = auth()->user()->empresa_id;
@@ -69,7 +70,7 @@ class User extends Authenticatable
 
         $data = User::where('empresa_id', $empresa_id);
 
-        if (!empty($queryFilter['whereIn'])) {
+        if (! empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
                 $data->whereIn($value[0], $value[1]);
             }

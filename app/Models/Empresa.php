@@ -17,7 +17,7 @@ class Empresa extends Model
         'nome',
         'plano',
         'status',
-        'instancia'
+        'instancia',
     ];
 
     public function users()
@@ -40,7 +40,8 @@ class Empresa extends Model
         return $this->hasMany(Prompt::class);
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $queryFilter = (new EmpresasFilter)->filter($request);
 
         $empresa_id = auth()->user()->empresa_id;
@@ -51,7 +52,7 @@ class Empresa extends Model
 
         $data = Empresa::where('id', $empresa_id);
 
-        if (!empty($queryFilter['whereIn'])) {
+        if (! empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
                 $data->whereIn($value[0], $value[1]);
             }

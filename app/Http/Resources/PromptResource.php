@@ -16,10 +16,10 @@ class PromptResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "mensagem" => $this->mensagem,
-            "created_at" => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
-            "updated_at" => Carbon::parse($this->updated_at)->format('d/m H:i')//Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')
+            'id' => $this->id,
+            'mensagem' => $this->mensagem,
+            'created_at' => Carbon::parse($this->created_at)->format('d/m/Y H:i:s'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('d/m H:i'), // Carbon::parse($this->updated_at)->format('d/m/Y H:i:s')
         ];
     }
 }

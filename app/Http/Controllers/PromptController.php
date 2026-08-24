@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class PromptController extends Controller
 {
-     use HttpResponses;
+    use HttpResponses;
 
     public function index(Request $request)
     {
-        return (new Prompt())->filter($request);
+        return (new Prompt)->filter($request);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -25,10 +25,9 @@ class PromptController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->error("Erro na validação", 422, $validator->errors());
+            return $this->error('Erro na validação', 422, $validator->errors());
         }
 
-        
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
 
@@ -37,16 +36,17 @@ class PromptController extends Controller
         $criado = Prompt::create($data);
 
         if ($criado) {
-            return $this->response("Mensagem adicionada com sucesso", 200, $criado);
+            return $this->response('Mensagem adicionada com sucesso', 200, $criado);
         }
 
-        return $this->error("Não foi possível adicionar", 400);
+        return $this->error('Não foi possível adicionar', 400);
     }
 
-    public function show(string $id) 
-    {   
+    public function show(string $id)
+    {
         // buscando a empresa id
         $empresa_id = auth()->user()->empresa_id;
+
         return new PromptResource(Prompt::where('id', $id)->where('empresa_id', $empresa_id)->first());
     }
 
@@ -57,7 +57,7 @@ class PromptController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->error("Erro na validação", 422, $validator->errors());
+            return $this->error('Erro na validação', 422, $validator->errors());
         }
 
         $validated = $validator->validate();
@@ -67,9 +67,9 @@ class PromptController extends Controller
         ]);
 
         if ($atualiza) {
-            return $this->response("Prompt atualizado com sucesso", 200, $request->all());
+            return $this->response('Prompt atualizado com sucesso', 200, $request->all());
         }
 
-        return $this->error("Não foi possível atualizar", 400);
+        return $this->error('Não foi possível atualizar', 400);
     }
 }

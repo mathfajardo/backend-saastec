@@ -6,7 +6,6 @@ use App\Filters\ClientesFilter;
 use App\Http\Resources\ClienteResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
 class Cliente extends Model
@@ -21,9 +20,8 @@ class Cliente extends Model
         'numero',
         'plano',
         'mensalidade',
-        'observacoes'
+        'observacoes',
     ];
-
 
     public function empresa()
     {
@@ -35,7 +33,8 @@ class Cliente extends Model
         return $this->belongsTo(Lead::class);
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $queryFilter = (new ClientesFilter)->filter($request);
 
         $empresa_id = auth()->user()->empresa_id;
@@ -46,7 +45,7 @@ class Cliente extends Model
 
         $data = Cliente::where('empresa_id', $empresa_id);
 
-        if (!empty($queryFilter['whereIn'])) {
+        if (! empty($queryFilter['whereIn'])) {
             foreach ($queryFilter['whereIn'] as $value) {
                 $data->whereIn($value[0], $value[1]);
             }

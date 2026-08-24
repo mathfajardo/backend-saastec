@@ -13,10 +13,9 @@ class LeadController extends Controller
 {
     use HttpResponses;
 
-
-    public function index(Request $request) 
+    public function index(Request $request)
     {
-        return (new Lead())->filter($request);
+        return (new Lead)->filter($request);
     }
 
     public function store(Request $request)
@@ -26,10 +25,8 @@ class LeadController extends Controller
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
-            'observacoes' => 'nullable'
+            'observacoes' => 'nullable',
         ]);
-
-        
 
         if ($validator->fails()) {
             return $this->error('Erro na validação', 422, $validator->errors());
@@ -43,25 +40,26 @@ class LeadController extends Controller
         $criado = Lead::create($data);
 
         if ($criado) {
-            return $this->response("Lead adicionado com sucesso", 200, $criado);
+            return $this->response('Lead adicionado com sucesso', 200, $criado);
         }
 
-        return $this->error("Não foi possível adicionar", 400);
+        return $this->error('Não foi possível adicionar', 400);
     }
 
-    public function show(string $id) 
-    {   
+    public function show(string $id)
+    {
         $empresa_id = auth()->user()->empresa_id;
+
         return new LeadResource(Lead::where('id', $id)->where('empresa_id', $empresa_id)->first());
     }
 
-    public function update(Request $request, string $id) 
+    public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
             'nome' => 'required',
             'numero' => 'required',
             'status' => 'required',
-            'observacoes' => 'nullable'
+            'observacoes' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -74,27 +72,29 @@ class LeadController extends Controller
             'nome' => $validated['nome'],
             'numero' => $validated['numero'],
             'status' => $validated['status'],
-            'observacoes' => $validated['observacoes']
+            'observacoes' => $validated['observacoes'],
         ]);
 
         if ($atualiza) {
-            return $this->response("Lead atualizado com sucesso", 200, $request->all());
+            return $this->response('Lead atualizado com sucesso', 200, $request->all());
         }
 
-        return $this->error("Não foi possível atualizar", 400);
+        return $this->error('Não foi possível atualizar', 400);
     }
 
-    public function destroy(Lead $lead) {
+    public function destroy(Lead $lead)
+    {
         $deleta = $lead->delete();
 
         if ($deleta) {
-            return $this->response("Deletado com sucesso", 200);
+            return $this->response('Deletado com sucesso', 200);
         }
 
-        return $this->response("Não foi possível deletar", 400);
+        return $this->response('Não foi possível deletar', 400);
     }
 
-    public function leadsMes() {
+    public function leadsMes()
+    {
 
         $empresa_id = auth()->user()->empresa_id;
 
@@ -105,15 +105,14 @@ class LeadController extends Controller
         // query
         $total = Lead::whereMonth('created_at', $mes)->whereYear('created_at', $ano)->where('empresa_id', $empresa_id)->count();
 
-        return $this->response("Query leads no mes realizada com sucesso", 200, ['total' => $total]);
+        return $this->response('Query leads no mes realizada com sucesso', 200, ['total' => $total]);
     }
 
-    public function leadsMesTodos() {
+    public function leadsMesTodos()
+    {
 
         $empresa_id = auth()->user()->empresa_id;
 
-        
-        
         $ano = now()->year;
 
         $meses = [];
@@ -124,11 +123,11 @@ class LeadController extends Controller
             $meses[$i] = $total;
         }
 
-        return $this->response("Query leads no mes realizada com sucesso", 200, [$meses]);
+        return $this->response('Query leads no mes realizada com sucesso', 200, [$meses]);
     }
 
     public function disparoCampanhaLeads(Request $request)
-    {   
+    {
         // array para armazenar dados
         $dados_enviar = [];
 
@@ -139,21 +138,21 @@ class LeadController extends Controller
         $leads = $request->input('leads');
 
         // loop para percorrer todos os leads
-        foreach($leads as $lead) {
+        foreach ($leads as $lead) {
             $dados_enviar[] = [
                 'mensagem' => $mensagem,
                 'nome' => $lead['nome'],
-                'numero' => $lead['numero']
+                'numero' => $lead['numero'],
             ];
         }
 
         // envio para o n8n
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ])->post('https://n8n.fajatech.com.br/webhook/4c3f68ed-56b6-49fa-a5af-6da47957a72b', $dados_enviar);
-        
-        return $this->response("Deu certo", 200);
+
+        return $this->response('Deu certo', 200);
 
     }
 }
