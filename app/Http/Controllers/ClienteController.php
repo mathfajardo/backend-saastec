@@ -121,6 +121,6 @@ class ClienteController extends Controller
         // query
         $total = Cliente::where('empresa_id', $empresa_id)->count();
 
-        return $this->response('Query clientes no total realizada com sucesso', 200, ['total' => $total]);
+        return $this->response('Query de clientes no total realizada com sucesso', 200, ['total' => $total]);
     }
 }
