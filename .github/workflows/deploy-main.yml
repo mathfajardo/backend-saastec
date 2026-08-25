@@ -1,0 +1,47 @@
+name: Deploy Laravel para VPS
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          envs: VPS_APP_PATH
+          script: |
+            set -e
+
+            cd "$VPS_APP_PATH"
+
+            git fetch origin master
+            git reset --hard origin/master
+
+            composer install \
+              --no-dev \
+              --prefer-dist \
+              --optimize-autoloader \
+              --no-interaction
+
+            php artisan migrate --force
+            php artisan optimize
+
+            # Reinicia workers Laravel, caso existam
+            php artisan queue:restart || true
+
+        env:
+          VPS_APP_PATH: ${{ secrets.VPS_APP_PATH }}
